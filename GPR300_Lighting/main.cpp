@@ -320,14 +320,14 @@ int main() {
 			litShader.setFloat("_PointLights[" + std::to_string(i) + "].linearK", _PointLight.linearK);
 			litShader.setFloat("_PointLights[" + std::to_string(i) + "].quadraticK", _PointLight.quadraticK);
 
-			//unlitShader.use();
-			//unlitShader.setMat4("_Projection", camera.getProjectionMatrix());
-			//unlitShader.setMat4("_View", camera.getViewMatrix());
+			unlitShader.use();
+			unlitShader.setMat4("_Projection", camera.getProjectionMatrix());
+			unlitShader.setMat4("_View", camera.getViewMatrix());
 
-			//lightTransform.position = lightPosition;
-			//unlitShader.setMat4("_Model", lightTransform.getModelMatrix());
-			//unlitShader.setVec3("_Color", color);
-			//sphereMesh.draw();
+			lightTransform.position = lightPosition;
+			unlitShader.setMat4("_Model", lightTransform.getModelMatrix());
+			unlitShader.setVec3("_Color", _PointLight.light.color);
+			sphereMesh.draw();
 		}
 		litShader.use();
 		litShader.setInt("lightCount", numPointLights);

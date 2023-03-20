@@ -43,10 +43,10 @@ void main(){
 
     vertexOutput.uv = vUV;
 
-    // calculate TBN
-    vec3 t = normalize(vec3(_Model * vec4(vTangent, 0.0f)));
-    vec3 n = normalize(vec3(_Model * vec4(vNormal, 0.0f)));
-    vec3 b = cross(n, t);
+    // Calculate the TBN 
+    vec3 t = normalize(transpose(inverse(mat3(_Model))) * vTangent);
+    vec3 n = normalize(transpose(inverse(mat3(_Model))) * vNormal);
+    vec3 b = cross(t, n);
 
     TBN = mat3(t, b, n);
 

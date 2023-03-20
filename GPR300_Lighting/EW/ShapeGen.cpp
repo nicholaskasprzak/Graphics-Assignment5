@@ -131,7 +131,7 @@ namespace ew {
 		meshData.indices.assign(&indices[0], &indices[36]);
 
 		// Calculate tangents
-		for (int i = 0; i < meshData.vertices.size(); i += 3)
+		for (int i = 0; i < meshData.indices.size(); i += 3)
 		{
 			Vertex& vertex1 = meshData.vertices[meshData.indices[i]];
 			Vertex& vertex2 = meshData.vertices[meshData.indices[i + 1]];
@@ -143,8 +143,8 @@ namespace ew {
 			glm::vec2 deltaUV1 = vertex2.uv - vertex1.uv;
 			glm::vec2 deltaUV2 = vertex3.uv - vertex1.uv;
 
-			float f = 1.0 / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
-			
+			float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
 			glm::vec3 tangent;
 			tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
 			tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
@@ -170,6 +170,7 @@ namespace ew {
 		float thetaStep = (2.0f * glm::pi<float>()) / (float)numSegments;
 		float phiStep = (glm::pi<float>()) / (float)numSegments;
 
+		// Try working in reverse here?
 		for (int i = 1; i < numSegments; i++)
 		{
 			float phi = phiStep * i;
