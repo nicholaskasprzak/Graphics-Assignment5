@@ -24,6 +24,7 @@ struct Material
     vec3 color;
     float ambientK, diffuseK, specularK; // (0-1 range)
     float shininess; // (0-512 range)
+    float normalIntensity;
 };
 
 /*
@@ -79,6 +80,7 @@ uniform float scrollSpeedX;
 uniform float scrollSpeedY;
 uniform float scalingX;
 uniform float scalingY;
+uniform float normalIntensity;
 
 /*
 * Calculates the ambient of a light.
@@ -184,7 +186,16 @@ float calcAngularAttenuation(SpotLight light, vec3 vertPos)
 }
 
 void main(){ 
+    
+    // Calculate new normal from normal map, convert it
+    // out of tangent space with the TBN matrix, and
+    // pass it into a new vertex variable.
     vec3 normal = texture(_Normal, vertexOutput.uv).rgb;
+    normal = (normal * 2.0f) - 1.0f;
+    normal = normalize(normal * TBN);
+
+    Vertex newVertex = vertexOutput;
+    newVertex.worldNormal = normal;
 
     vec3 lightCol;
 
@@ -193,7 +204,7 @@ void main(){
     // Point Lights
     for (int i = 0; i < lightCount; i++)
     {
-        lightCol += calcPhong(vertexOutput, _Material, _PointLights[i].light, normal * (_PointLights[i].position - vertexOutput.worldPosition), normal * _CameraPosition) * calcGLAttenuation(_PointLights[i], vertexOutput.worldPosition);
+        lightCol += calcPhong(newVertex, _Material, _PointLights[i].light, (_PointLights[i].position - newVertex.worldPosition), _CameraPosition) * calcGLAttenuation(_PointLights[i], newVertex.worldPosition);
     }
 
     //lightCol += calcPhong(vertexOutput, _Material, _SpotLight.light, _SpotLight.position - vertexOutput.worldPosition, _CameraPosition) * calcAngularAttenuation(_SpotLight, vertexOutput.worldPosition);
@@ -204,5 +215,5 @@ void main(){
     modifiedUV.x = (scrollSpeedX * time) + scalingX * modifiedUV.x;
     modifiedUV.y = (scrollSpeedY * time) + scalingY * modifiedUV.y;
 
-    FragColor = texture(_Texture1, modifiedUV) * vec4(lightCol * _Material.color, 1.0f);
+    FragColor = texture(_Texture1, vertexOutput.uv) * vec4(lightCol * _Material.color, 1.0f);
 }

@@ -107,7 +107,6 @@ DirectionalLight _DirectionalLight;
 PointLight _PointLight;
 SpotLight _SpotLight;
 Material _Material;
-//_Material.
 
 // Not sure if this is the best spot to be putting this
 GLuint getTexture(const char* texturePath)
@@ -263,6 +262,7 @@ int main() {
 	float scrollSpeedY = 0;
 	float scalingX = 1;
 	float scalingY = 1;
+	float normalIntensity = 1;
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, brickTexture);
@@ -422,6 +422,7 @@ int main() {
 		ImGui::DragFloat("Scroll Speed Y", &scrollSpeedY, 0.1, -1, 1);
 		ImGui::DragFloat("Scale X", &scalingX, 1, 1, 5);
 		ImGui::DragFloat("Scale Y", &scalingY, 1, 1, 5);
+		ImGui::DragFloat("Normal Intensity", &normalIntensity, 0.1, 0, 1);
 		ImGui::End();
 
 		ImGui::Render();

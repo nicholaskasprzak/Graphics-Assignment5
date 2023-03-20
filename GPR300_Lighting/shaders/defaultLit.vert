@@ -43,9 +43,9 @@ void main(){
 
     vertexOutput.uv = vUV;
 
-    // calculate TBM. TBM allows access to tangent without having to pass the tangent in frag shader?
-    vec3 t = normalize(vec3(_Model * vec4(vTangent, 0.0)));
-    vec3 n = normalize(vec3(_Model * vec4(vNormal, 0.0)));
+    // calculate TBN
+    vec3 t = normalize(vec3(_Model * vec4(vTangent, 0.0f)));
+    vec3 n = normalize(vec3(_Model * vec4(vNormal, 0.0f)));
     vec3 b = cross(n, t);
 
     TBN = mat3(t, b, n);

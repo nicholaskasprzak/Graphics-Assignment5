@@ -131,7 +131,7 @@ namespace ew {
 		meshData.indices.assign(&indices[0], &indices[36]);
 
 		// Calculate tangents
-		for (int i = 0; i < meshData.indices.size(); i += 3)
+		for (int i = 0; i < meshData.vertices.size(); i += 3)
 		{
 			Vertex& vertex1 = meshData.vertices[meshData.indices[i]];
 			Vertex& vertex2 = meshData.vertices[meshData.indices[i + 1]];
