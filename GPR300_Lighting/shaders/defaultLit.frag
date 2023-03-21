@@ -191,7 +191,10 @@ void main(){
     // pass it into a new vertex variable.
     vec3 normal = texture(_Normal, vertexOutput.uv).rgb;
     normal = (normal * 2.0f) - 1.0f;
+    normal.r = normal.r * normalIntensity;
+    normal.g = normal.g * normalIntensity;
     normal = normalize(normal * TBN);
+    
 
     Vertex newVertex = vertexOutput;
     newVertex.worldNormal = normal;

@@ -299,6 +299,7 @@ int main() {
 		litShader.setFloat("scrollSpeedY", scrollSpeedY);
 		litShader.setFloat("scalingX", scalingX);
 		litShader.setFloat("scalingY", scalingY);
+		litShader.setFloat("normalIntensity", normalIntensity);
 
 		/*
 		litShader.setVec3("_DirectionalLight.direction", _DirectionalLight.direction);

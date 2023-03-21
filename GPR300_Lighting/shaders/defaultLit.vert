@@ -46,7 +46,7 @@ void main(){
     // Calculate the TBN 
     vec3 t = normalize(transpose(inverse(mat3(_Model))) * vTangent);
     vec3 n = normalize(transpose(inverse(mat3(_Model))) * vNormal);
-    vec3 b = cross(t, n);
+    vec3 b = normalize(cross(t, n));
 
     TBN = mat3(t, b, n);
 
