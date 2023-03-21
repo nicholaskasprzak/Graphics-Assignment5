@@ -186,10 +186,6 @@ float calcAngularAttenuation(SpotLight light, vec3 vertPos)
 }
 
 void main(){ 
-    // For some reason, the sphere's lighting is inverted
-    // This probably has something to do with how its tangents
-    // are calculated
-
     // Calculate new normal from normal map, convert it
     // out of tangent space with the TBN matrix, and
     // pass it into a new vertex variable.
@@ -205,7 +201,7 @@ void main(){
     // Point Lights
     for (int i = 0; i < lightCount; i++)
     {
-        lightCol += calcPhong(vertexOutput, _Material, _PointLights[i].light, (_PointLights[i].position - vertexOutput.worldPosition), _CameraPosition) * calcGLAttenuation(_PointLights[i], vertexOutput.worldPosition);
+        lightCol += calcPhong(newVertex, _Material, _PointLights[i].light, (_PointLights[i].position - newVertex.worldPosition), _CameraPosition) * calcGLAttenuation(_PointLights[i], newVertex.worldPosition);
     }
 
     vec2 modifiedUV = vertexOutput.uv;

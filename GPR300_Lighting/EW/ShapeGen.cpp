@@ -170,7 +170,6 @@ namespace ew {
 		float thetaStep = (2.0f * glm::pi<float>()) / (float)numSegments;
 		float phiStep = (glm::pi<float>()) / (float)numSegments;
 
-		// Try working in reverse here?
 		for (int i = 1; i < numSegments; i++)
 		{
 			float phi = phiStep * i;
@@ -241,6 +240,7 @@ namespace ew {
 		}
 
 		// Calculate tangents
+		// Try working in reverse here?
 		for (int i = 0; i < meshData.indices.size(); i += 3)
 		{
 			Vertex& vertex1 = meshData.vertices[meshData.indices[i]];
@@ -259,6 +259,10 @@ namespace ew {
 			tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
 			tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
 			tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+			tangent.x *= 1;
+			tangent.y *= -1;
+			tangent.z *= -1;
 
 			vertex1.tangent = tangent;
 			vertex2.tangent = tangent;
